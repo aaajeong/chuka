@@ -1,0 +1,24 @@
+item{
+id: 1
+name: "laliga"
+}
+
+item{
+id: 2
+name: "ligue1"
+}
+
+item{
+id: 3
+name: "kleague"
+}
+
+item{
+id: 4
+name: "serieA"
+}
+
+item{
+id: 5
+name: "bundesliga"
+}
