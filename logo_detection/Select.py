@@ -204,14 +204,11 @@ class MyApp(QWidget):
                             hightlight.append(count)
                         else:
                             if (count - 1 in hightlight and count + 1 not in hightlight):
-                                cut.append(5 * (count - 4))
+                                cut.append(8 * (count-4))
                                 print(count - 1)
 
                         if (len(cut) > 1):
                             duration1 = cut[0] / fps
-                            start_hour = duration1 / 3600
-                            start_min = (duration1 - start_hour * 3600) / 60
-                            start_sec = (duration1 - start_hour * 3600 - start_min * 60)
                             duration2 = cut[1] / fps
                             length = duration2 - duration1
                             print(length)
@@ -219,8 +216,17 @@ class MyApp(QWidget):
                                 cut[0] = cut[1]
                                 del (cut[1])
                             else:
+                                start_hour = (duration1 / 3600)
+                                start_min = ((duration1 % 3600) / 60)
+                                start_sec = duration1 % 60
+
+                                end_hour = (duration2 / 3600)
+                                end_min = ((duration2 % 3600) / 60)
+                                end_sec = duration2 % 60
+
+
                                 tmp_video = video_for_cut.subclip(duration1, duration2)
-                                tmp_title = "%d+%d+%d.mp4" %(start_hour, start_min, start_sec)
+                                tmp_title = "%d+%d+%d~%d+%d+%d.mp4" % (start_hour, start_min, start_sec, end_hour, end_min, end_sec)
                                 cut_count += 1
                                 tmp_video.write_videofile(tmp_title, codec='libx264')
                                 cut = []
