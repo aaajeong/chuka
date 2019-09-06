@@ -94,8 +94,9 @@ class Ui_HighlightWindow(QWidget):
     def Button(self):
         sender = self.sender()
         print(sender.text())
+        new_filename = sender.text().replace(':', '+', 4)
         # 버튼 누르면 파일 재생
-        filename = './video_test/' + sender.text()
+        filename = './video_test/' + new_filename
 
         pygame.display.set_caption(sender.text())
 
