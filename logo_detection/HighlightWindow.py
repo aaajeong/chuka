@@ -85,7 +85,8 @@ class Ui_HighlightWindow(QWidget):
         buttons = {}
 
         for item in file_list:
-            buttons[item] = QtWidgets.QPushButton(str(item), self)
+            new_item = str(item).replace('+', ':', 4)
+            buttons[item] = QtWidgets.QPushButton(new_item, self)
             buttons[item].clicked.connect(self.Button)
             self.layout_3.addWidget(buttons[item])
 
