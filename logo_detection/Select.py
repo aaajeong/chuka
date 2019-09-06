@@ -52,8 +52,8 @@ class MyApp(QWidget):
         self.setWindowIcon(QIcon('./images/soccer.png'))
         self.setFixedWidth(640)
         self.setFixedHeight(480)
-        #self.setStyleSheet("background-color: white")
-        #self.setWindowOpacity()
+        # self.setStyleSheet("background-color: white")
+        # self.setWindowOpacity()
         layout_base = QBoxLayout(QBoxLayout.TopToBottom, self)
         self.setLayout(layout_base)
 
@@ -74,20 +74,18 @@ class MyApp(QWidget):
         grp_2_layout = QBoxLayout(QBoxLayout.LeftToRight)
         grp_2.setLayout(grp_2_layout)
         layout = QGridLayout()
-        #layout.addItem(QSpacerItem(10, 200))
+        # layout.addItem(QSpacerItem(10, 200))
 
-        #파일 선택 버튼
+        # 파일 선택 버튼
         self.file_b = QPushButton('File Open')
         self.file_b.clicked.connect(self.pushButtonClicked)
         layout.addWidget(self.file_b, 1, 0)
 
-        #파일 이름 출력
+        # 파일 이름 출력
         self.f_label = QLabel()
         layout.addWidget(self.f_label)
 
-
-
-        #리그 선택
+        # 리그 선택
         L_cb = QComboBox(self)
         L_cb.addItem('Laliga')
         L_cb.addItem('Serie A')
@@ -107,22 +105,19 @@ class MyApp(QWidget):
         self.submit_b.clicked.connect(self.makeHighlight)
         layout.addRow(self.submit_b)
 
-
-#파일 선택하는 함수
+    # 파일 선택하는 함수
     def pushButtonClicked(self):
         fpath = QFileDialog.getOpenFileName(self)
         fname = fpath[0].split("/")[-1]
         self.f_label.setText(fname)
         return fname
-    
-    
 
     def makeHighlight(self):
         filename = self.f_label.text()
         cap = cv2.VideoCapture(filename)
         video_for_cut = VideoFileClip(filename)
         fps = cap.get(cv2.CAP_PROP_FPS)
-        sys.path.append("..")
+        #sys.path.append("..")
 
         MODEL_NAME = 'soccer_highlight2'
 
@@ -167,21 +162,17 @@ class MyApp(QWidget):
                     classes = detection_graph.get_tensor_by_name('detection_classes:0')
                     num_detections = detection_graph.get_tensor_by_name('num_detections:0')
                     # Actual detection.
-                    
-                    
+
                     try:
                         (boxes, scores, classes, num_detections) = sess.run(
                             [boxes, scores, classes, num_detections],
                             feed_dict={image_tensor: image_np_expanded})
                     # 동영상 끝나면 highlightui로 넘어가게 된다.
                     except TypeError:
-                        self.window = QtWidgets.QMainWindow()
-                        self.ui = Ui_HighlightWindow()
-                        self.ui.setupUi(self.window)
+                        self.window = Ui_HighlightWindow()
                         self.window.show()
+
                         break
-
-
 
                     # Visualization of the results of a detection.
                     vis_util.visualize_boxes_and_labels_on_image_array(
@@ -197,14 +188,14 @@ class MyApp(QWidget):
 
                         title = "%d.jpg" % count
                         count += 1
-                        #cv2.imshow('object detection', cv2.resize(image_np, (800, 600)))
+                        # cv2.imshow('object detection', cv2.resize(image_np, (800, 600)))
 
                         if (float(100 * scores[0][0]) > 99.7):
                             print(title)
                             hightlight.append(count)
                         else:
                             if (count - 1 in hightlight and count + 1 not in hightlight):
-                                cut.append(8 * (count-4))
+                                cut.append(8 * (count - 4))
                                 print(count - 1)
 
                         if (len(cut) > 1):
@@ -224,13 +215,12 @@ class MyApp(QWidget):
                                 end_min = ((duration2 % 3600) / 60)
                                 end_sec = duration2 % 60
 
-
                                 tmp_video = video_for_cut.subclip(duration1, duration2)
-                                tmp_title = "%d+%d+%d~%d+%d+%d.mp4" % (start_hour, start_min, start_sec, end_hour, end_min, end_sec)
+                                tmp_title = "./videos/%d+%d+%d~%d+%d+%d.mp4" % (
+                                start_hour, start_min, start_sec, end_hour, end_min, end_sec)
                                 cut_count += 1
                                 tmp_video.write_videofile(tmp_title, codec='libx264')
                                 cut = []
-
 
 
 if __name__ == "__main__":
