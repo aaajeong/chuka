@@ -12,7 +12,7 @@ from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import *
 
-
+import os
 import cv2
 from PyQt5 import QtWidgets
 import pygame
@@ -85,7 +85,8 @@ class Ui_HighlightWindow(QWidget):
         buttons = {}
 
         for item in file_list:
-            buttons[item] = QtWidgets.QPushButton(str(item), self)
+            new_item = str(item).replace('+', ':', 4)
+            buttons[item] = QtWidgets.QPushButton(new_item, self)
             buttons[item].clicked.connect(self.Button)
             self.layout_3.addWidget(buttons[item])
 
@@ -94,7 +95,7 @@ class Ui_HighlightWindow(QWidget):
         sender = self.sender()
         print(sender.text())
         # 버튼 누르면 파일 재생
-        filename = './videos/' + sender.text()
+        filename = './videos' + sender.text()
 
         pygame.display.set_caption(sender.text())
 
