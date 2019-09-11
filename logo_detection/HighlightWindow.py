@@ -13,13 +13,13 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import *
 
 
-import cv2
 from PyQt5 import QtWidgets
 import pygame
 from moviepy.editor import *
+# from Video_Test import Data
 
 #파일 경로 가져오기
-path_dir = './video_test'
+path_dir = './video'
 
 file_list = os.listdir(path_dir)        #path에 존재하는 파일 목록
 file_list.sort()
@@ -38,6 +38,7 @@ class Ui_HighlightWindow(QWidget):
 
     def __init__(self):
         QWidget.__init__(self, flags=Qt.Widget)
+
 
         # 배치될 위젯 변수 선언
         self.lb_1 = QLabel()
@@ -69,11 +70,10 @@ class Ui_HighlightWindow(QWidget):
         self.setFixedWidth(640)
         self.setFixedHeight(480)
 
-        self.lb_1.setText('파일 명이 들어갈 자리')
-
+        f = open('file&league.txt','r')
+        self.fname = f.readline()
+        self.lb_1.setText(self.fname)
         self.lb_1.setStyleSheet("background-color: yellow")
-
-
 
 
         self.layout_2.addWidget(self.lb_1)
@@ -86,17 +86,19 @@ class Ui_HighlightWindow(QWidget):
 
         for item in file_list:
             new_item = str(item).replace('+', ':', 4)
-            buttons[item] = QtWidgets.QPushButton(new_item, self)
+            bt_label = new_item[0:13]
+            buttons[item] = QtWidgets.QPushButton(bt_label, self)
             buttons[item].clicked.connect(self.Button)
             self.layout_3.addWidget(buttons[item])
-
 
     def Button(self):
         sender = self.sender()
         print(sender.text())
         new_filename = sender.text().replace(':', '+', 4)
+        new_filename = new_filename + '.mp4'
+        print(new_filename)
         # 버튼 누르면 파일 재생
-        filename = './video_test/' + new_filename
+        filename = './video/' + new_filename
 
         pygame.display.set_caption(sender.text())
 
