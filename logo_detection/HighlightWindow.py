@@ -12,7 +12,7 @@ from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import *
 
-import os
+
 import cv2
 from PyQt5 import QtWidgets
 import pygame
@@ -21,8 +21,7 @@ from moviepy.editor import *
 #파일 경로 가져오기
 path_dir = './videos'
 
-file_list = os.listdir(path_dir)        #path에 존재하는 파일 목록
-file_list.sort()
+
 
 """
     파일 이름에서 특정 string을 가지는 파일만 뽑아내기
@@ -84,18 +83,32 @@ class Ui_HighlightWindow(QWidget):
         #파일 리스트 버튼
         buttons = {}
 
+        file_list = os.listdir(path_dir)  # path에 존재하는 파일 목록
+        file_list.sort()
+
         for item in file_list:
             new_item = str(item).replace('+', ':', 4)
             buttons[item] = QtWidgets.QPushButton(new_item, self)
             buttons[item].clicked.connect(self.Button)
             self.layout_3.addWidget(buttons[item])
 
+        self.shutdown_b = QPushButton('종료')
+        self.shutdown_b.clicked.connect(self.deleteFiles)
+        self.layout_3.addWidget(self.shutdown_b)
+
+    def deleteFiles(self):
+        if os.path.exists(path_dir):
+            for file in os.scandir(path_dir):
+                os.remove(file.path)
+
+        exit()
 
     def Button(self):
         sender = self.sender()
         print(sender.text())
+        new_filename = sender.text().replace(':', '+', 4)
         # 버튼 누르면 파일 재생
-        filename = './videos' + sender.text()
+        filename = './videos/' + new_filename
 
         pygame.display.set_caption(sender.text())
 

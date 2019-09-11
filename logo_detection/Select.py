@@ -6,7 +6,7 @@ import sys
 import tarfile
 import tensorflow as tf
 import zipfile
-from moviepy.editor import *
+from moviepy.video.io.VideoFileClip import VideoFileClip
 from collections import defaultdict
 from io import StringIO
 from matplotlib import pyplot as plt
@@ -105,6 +105,8 @@ class MyApp(QWidget):
         self.submit_b.clicked.connect(self.makeHighlight)
         layout.addRow(self.submit_b)
 
+
+
     # 파일 선택하는 함수
     def pushButtonClicked(self):
         fpath = QFileDialog.getOpenFileName(self)
@@ -119,7 +121,7 @@ class MyApp(QWidget):
         fps = cap.get(cv2.CAP_PROP_FPS)
         #sys.path.append("..")
 
-        MODEL_NAME = 'soccer_highlight2'
+        MODEL_NAME = 'soccer_highlight_goal2'
 
         # Path to frozen detection graph. This is the actual model that is used for the object detection.
         PATH_TO_FROZEN_GRAPH = MODEL_NAME + '/frozen_inference_graph.pb'
