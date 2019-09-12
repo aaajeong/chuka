@@ -95,7 +95,7 @@ class MyApp(QWidget):
         fname = fpath[0].split("/")[-1]
         self.f_label.setText(fname)
         print(fname)
-        f = open('file&league.txt','w')
+        f = open('file_league.txt','w')
         f.write(fname)
         f.close()
 
