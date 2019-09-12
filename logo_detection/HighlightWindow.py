@@ -68,10 +68,11 @@ class Ui_HighlightWindow(QWidget):
         self.setFixedWidth(640)
         self.setFixedHeight(480)
 
-        self.lb_1.setText('파일 명이 들어갈 자리')
-
+        f = open('file_league.txt', 'r')
+        self.txt_file = f.readline()
+        self.txt_file = self.txt_file.replace('.mp4', '  ', 1)
+        self.lb_1.setText(self.txt_file)
         self.lb_1.setStyleSheet("background-color: yellow")
-
 
 
 
@@ -88,7 +89,8 @@ class Ui_HighlightWindow(QWidget):
 
         for item in file_list:
             new_item = str(item).replace('+', ':', 4)
-            buttons[item] = QtWidgets.QPushButton(new_item, self)
+            bt_label = new_item[0:13]
+            buttons[item] = QtWidgets.QPushButton(bt_label, self)
             buttons[item].clicked.connect(self.Button)
             self.layout_3.addWidget(buttons[item])
 
@@ -107,6 +109,8 @@ class Ui_HighlightWindow(QWidget):
         sender = self.sender()
         print(sender.text())
         new_filename = sender.text().replace(':', '+', 4)
+        new_filename = new_filename + '.mp4'
+        print(new_filename)
         # 버튼 누르면 파일 재생
         filename = './videos/' + new_filename
 
