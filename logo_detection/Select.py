@@ -101,7 +101,7 @@ class MyApp(QWidget):
 
     def on_select(self):
         result2 = self.L_cb.currentText()
-        f = open('file&league.txt', 'a')
+        f = open('file_league.txt', 'a')
         f.write(result2)
         f.close()
 
