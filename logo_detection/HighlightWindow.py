@@ -71,8 +71,9 @@ class Ui_HighlightWindow(QWidget):
         self.setFixedHeight(480)
 
         f = open('file&league.txt','r')
-        self.fname = f.readline()
-        self.lb_1.setText(self.fname)
+        self.txt_file = f.readline()
+        self.txt_file = self.txt_file.replace('.mp4', '  ', 1)
+        self.lb_1.setText(self.txt_file)
         self.lb_1.setStyleSheet("background-color: yellow")
 
 
