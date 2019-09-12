@@ -68,16 +68,16 @@ class MyApp(QWidget):
 
 
         #리그 선택
-        L_cb = QComboBox(self)
+        self.L_cb = QComboBox(self)
         # L_cb.addItem('Laliga')
         # L_cb.addItem('Serie A')
         # L_cb.addItem('Ligue 1')
         # L_cb.addItem('Bundesliga')
         # L_cb.addItem('K-League')
-        L_cb.addItems(["Laliga", "Serie A", "Ligue 1", "Bundesliga", "K-League"])
-        self.Lname = L_cb.currentText()
+        self.L_cb.addItems(["Laliga", "Serie A", "Ligue 1", "Bundesliga", "K-League"])
+        self.L_cb.currentTextChanged.connect(self.on_select)
         grp_2_layout.addLayout(layout)
-        grp_2_layout.addWidget(L_cb)
+        grp_2_layout.addWidget(self.L_cb)
 
         # 세 번째 그룹 QFormLaytout
         grp_3 = QGroupBox("Make HighLight")
@@ -97,8 +97,15 @@ class MyApp(QWidget):
         print(fname)
         f = open('file&league.txt','w')
         f.write(fname)
-        f.write(self.Lname)
         f.close()
+
+    def on_select(self):
+        result2 = self.L_cb.currentText()
+        f = open('file&league.txt', 'a')
+        f.write(result2)
+        f.close()
+
+
 
 
 
