@@ -62,7 +62,7 @@ class Ui_HighlightWindow(QWidget):
         self.setFixedWidth(640)
         self.setFixedHeight(480)
 
-        f = open('file_league.txt','r')
+        f = open('file_league.txt', 'r')
         self.txt_file = f.readline()
         self.txt_file = self.txt_file.replace('.mp4', '  ', 1)
         self.lb_1.setText(self.txt_file)
