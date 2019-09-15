@@ -227,4 +227,3 @@ if __name__ == "__main__":
     form = MyApp()
     form.show()
     exit(app.exec_())
-
