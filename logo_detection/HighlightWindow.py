@@ -13,16 +13,23 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import *
 
 
+import cv2
 from PyQt5 import QtWidgets
 import pygame
 from moviepy.editor import *
-# from Video_Test import Data
 
 #파일 경로 가져오기
-path_dir = './video'
+path_dir = './videos'
 
-file_list = os.listdir(path_dir)        #path에 존재하는 파일 목록
-file_list.sort()
+
+
+"""
+    파일 이름에서 특정 string을 가지는 파일만 뽑아내기
+"""
+# for item in file_list:
+#     #some_string 이 파일 이름에 없을 경우 -1을 반환
+#     if item.find('#')is not -1:
+#         print(item)
 
 
 class Ui_HighlightWindow(QWidget):
@@ -30,7 +37,6 @@ class Ui_HighlightWindow(QWidget):
 
     def __init__(self):
         QWidget.__init__(self, flags=Qt.Widget)
-
 
         # 배치될 위젯 변수 선언
         self.lb_1 = QLabel()
@@ -69,6 +75,7 @@ class Ui_HighlightWindow(QWidget):
         self.lb_1.setStyleSheet("background-color: yellow")
 
 
+
         self.layout_2.addWidget(self.lb_1)
         self.layout_3.addWidget(self.s1)
         self.layout_3 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
@@ -76,6 +83,9 @@ class Ui_HighlightWindow(QWidget):
 
         #파일 리스트 버튼
         buttons = {}
+
+        file_list = os.listdir(path_dir)  # path에 존재하는 파일 목록
+        file_list.sort()
 
         for item in file_list:
             new_item = str(item).replace('+', ':', 4)
@@ -102,7 +112,7 @@ class Ui_HighlightWindow(QWidget):
         new_filename = new_filename + '.mp4'
         print(new_filename)
         # 버튼 누르면 파일 재생
-        filename = './video/' + new_filename
+        filename = './videos/' + new_filename
 
         pygame.display.set_caption(sender.text())
 
