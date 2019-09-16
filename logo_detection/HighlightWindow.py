@@ -89,7 +89,7 @@ class Ui_HighlightWindow(QWidget):
 
         for item in file_list:
             new_item = str(item).replace('+', ':', 4)
-            bt_label = new_item[0:13]
+            bt_label = new_item.rstrip('.mp4')
             buttons[item] = QtWidgets.QPushButton(bt_label, self)
             buttons[item].clicked.connect(self.Button)
             self.layout_3.addWidget(buttons[item])
