@@ -43,7 +43,7 @@ class Ui_HighlightWindow(QWidget):
         self.centralWidget = QtWidgets.QWidget()
         self.s1 = QtWidgets.QScrollArea(self.centralWidget)
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0,0,600,600))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0,0,600,1000))
         self.s1.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.s1.setWidget(self.scrollAreaWidgetContents)
 
@@ -89,7 +89,7 @@ class Ui_HighlightWindow(QWidget):
 
         for item in file_list:
             new_item = str(item).replace('+', ':', 4)
-            bt_label = new_item[0:13]
+            bt_label = new_item.rstrip('mp4')
             buttons[item] = QtWidgets.QPushButton(bt_label, self)
             buttons[item].clicked.connect(self.Button)
             self.layout_3.addWidget(buttons[item])
@@ -109,7 +109,7 @@ class Ui_HighlightWindow(QWidget):
         sender = self.sender()
         print(sender.text())
         new_filename = sender.text().replace(':', '+', 4)
-        new_filename = new_filename + '.mp4'
+        new_filename = new_filename + 'mp4'
         print(new_filename)
         # 버튼 누르면 파일 재생
         filename = './videos/' + new_filename
